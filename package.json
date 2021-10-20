@@ -16,6 +16,7 @@
     "leaflet": "^1.7.1",
     "leaflet-canvas-marker": "^0.2.0",
     "leaflet-fontawesome-markers": "0.0.5",
+    "leaflet-panel-layers": "^1.2.7",
     "leaflet.markercluster": "^1.4.0",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",

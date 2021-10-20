@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import L from 'leaflet';
 import {useStore} from 'vuex';
 
 // 引入 leaflet.markercluster
@@ -45,7 +44,10 @@ export default {
         type: String, 
         required: true,
       },
-
+      group:{
+        type: String, 
+        required: true,
+      },
       iconClass:{
         type: String,
         required: true,
@@ -76,6 +78,7 @@ export default {
           shadowUrl: iconShadow
           });
         L.Marker.prototype.options.icon = DefaultIcon;
+
 
         const store = useStore();
 
@@ -115,9 +118,14 @@ export default {
 
         // 看預設要不要開啟
         if(props.open){
-          store.dispatch("addMarker", markerGroup); 
+          store.dispatch("addLayer", markerGroup); 
         }
-        store.dispatch("addOverlayMaps", {layer: markerGroup, title: props.overlay_title});
+        store.dispatch("addOverlayMaps", {
+          layer: markerGroup, 
+          title: props.overlay_title, 
+          group: props.group,
+          icon: props.iconClass,
+        });
 
 
         function onEachFeature(feature, layer) {
@@ -127,7 +135,8 @@ export default {
               switch (info.category){
                 case "公車站":
                     layer.bindPopup(`
-                        ${info.data.StopName.Zh_tw}
+                        <h1>${info.data.StopName.Zh_tw}</h1>
+                        <p>${info.data.StopUID}</p>
                     `);
                     break;
                 default:
@@ -136,7 +145,6 @@ export default {
                     `);
                     break;
                 }
-
             }
         }
         
@@ -146,6 +154,32 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.leaflet-popup-content-wrapper {
+	padding: 0;
+  width: 100%;
+  min-width: 10rem;
+	overflow: hidden;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+	margin: 0;
+  width: 100%;
+}
+
+.leaflet-popup-content-wrapper h1 {
+  width: 100%;
+	padding: 0.6rem;
+	background: #ff6804;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bolder;
+}
+
+.leaflet-popup-content-wrapper p {
+	font-size: 14px;
+	padding: 0 10px;
+	font-weight: bolder;
+}
 
 </style>

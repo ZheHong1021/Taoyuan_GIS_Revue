@@ -1,0 +1,85 @@
+<template>
+  
+  <div class="loader-wrapper">
+    <span class="loader">
+      <span class="loader-inner"></span>
+    </span>
+  </div>
+</template>
+
+<script>
+export default {
+    name: "Loading",
+    setup(){
+
+        return {}
+    }
+}
+</script>
+
+<style scoped>
+body {
+    margin: 0;
+    padding: 0;
+    width:100vw;
+    height: 100vh;
+    background-color: #eee;
+  }
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height:100%;
+  }
+
+
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  /* 覆蓋整個頁面 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #242f3f;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border: 4px solid #Fff;
+
+  /* 動畫，時間2s，重複播放，動畫播放速率 */
+  animation: loader 2s infinite ease;
+}
+
+/* 動畫調整角度 */
+@keyframes loader {
+  0% { transform: rotate(0deg);}
+  25% { transform: rotate(180deg);}
+  50% { transform: rotate(180deg);}
+  75% { transform: rotate(360deg);}
+  100% { transform: rotate(360deg);}
+}
+
+.loader-inner {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  animation: loader-inner 2s infinite ease-in;
+}
+
+@keyframes loader-inner {
+  0% { height: 0%;}
+  25% { height: 0%;}
+  50% { height: 100%;}
+  75% { height: 100%;}
+  100% { height: 0%;}
+} 
+</style>

@@ -1,56 +1,36 @@
 <template>
-  <div id="map"></div>
 
-  <Map :init="init_Map" :here_Key="here_API"/>
+    <transition name="fade">
+      <Loading style="z-index: 1001;" v-if="showLoading"></Loading>
+    </transition>
 
-    <Marker 
-      v-if="data.train.length > 0"
-      :data="data.train" 
-      overlay_title="火車站" 
-      prefix="StationPosition"
-      lat="PositionLat" 
-      lng="PositionLon"
-      iconClass="fa fa-train"
-      :offsetX="-1" />
-
-    <Marker 
-      v-if="data.thsr.length > 0"
-      :data="data.thsr" 
-      overlay_title="高鐵站" 
-      prefix="StationPosition"
-      lat="PositionLat" 
-      lng="PositionLon"
-      iconClass="fas fa-subway"
-      markerColor="#8e44ad"
-      :offsetX="-1" />
-
-    <Marker 
-      v-if="data.bus.length > 0"
-      :data="data.bus" 
-      overlay_title="公車站" 
-      prefix="StopPosition"
-      lat="PositionLat" 
-      lng="PositionLon"
-      iconClass="fa fa-bus"
-      markerColor="#009432"
-      :offsetX="-2"  />
-
-
+    <div id="map" v-show="!showLoading"></div>
+  <District />
+  <Map :init="init_Map"/>
+  <Thsr />
+  <Bus />
+  <Train />
 </template>
 
 <script>
-import "leaflet/dist/leaflet.css";
+import {  reactive, ref } from '@vue/reactivity'
 import Map from '@/components/Map'
-import Marker from '@/components/Marker'
-import {  reactive } from '@vue/reactivity'
+import District from '@/components/District'
+import Loading from '@/components/Loading';
 import { onMounted } from '@vue/runtime-core';
-import {API_Train_Station, API_THSR_Station, API_Taoyuan_BusStation} from '@/api/api.js'
+import Thsr from '@/components/Transportation/Thsr';
+import Bus from '@/components/Transportation/Bus';
+import Train from '@/components/Transportation/Train';
 
 export default {
   name: "App",
   components: {
     Map: Map,
-    Marker: Marker,
+    District: District,
+    Loading: Loading,
+    Thsr: Thsr,
+    Bus: Bus,
+    Train: Train,
   },
   setup(){
 
@@ -64,58 +44,16 @@ export default {
       maxZoom: 18,
     })
 
-    const here_API = reactive({
-      key: "qcwHTsJura1qAf9AT75Nvl5DoolyvxQdAJmu-1wGTWQ", // 您的 HERE APIKEY
-      dataHubReadToken: "APa7WWjkRhGKor_kt7QPQQA", // 您的 Data Hub Token
-      distrcitSpaceId: "5b0dSwmn", // 鄉鎮區界 Space ID
-    })
+  const showLoading = ref(false);
+  const loading_Time = 2; 
+  onMounted(()=>{
+    showLoading.value = true;
+    setTimeout(() => {
+      showLoading.value = false;
+    }, loading_Time * 1000);
+  })
 
-    onMounted(async()=>{
-      await get_Train();
-      await get_Bus();
-      await get_Thsr();
-    })
-
-    // 地圖標記
-    const data = reactive({
-      bus: [],
-      train: [],
-      thsr: [],
-    })
-
-    const get_Bus = ()=>{
-      API_Taoyuan_BusStation().then((res)=>{
-          let exist = [];
-          data.bus = res.data.filter((item)=>{
-            // 不存在則加入
-            if(!exist.includes(item.StopName.Zh_tw)){
-              exist.push(item.StopName.Zh_tw);
-              return true;
-            }
-            return false;
-          });
-      }).catch((err)=>{
-          console.log('連線異常:' + err);
-      });
-    }
-    const get_Train = ()=>{
-      API_Train_Station().then((res)=>{
-          data.train = res.data;
-      }).catch((err)=>{
-          console.log('連線異常:' + err);
-      });
-    }
-    const get_Thsr = ()=>{
-      API_THSR_Station().then((res)=>{
-          data.thsr = res.data;
-      }).catch((err)=>{
-          console.log('連線異常:' + err);
-      });
-    }
-
-
-
-    return {init_Map, here_API, data}
+    return {init_Map, showLoading}
   }
 }
 </script>
@@ -129,5 +67,23 @@ export default {
 #map{
   width: 100%;
   height: 100vh;
+  z-index: 1;
 }
+
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave, .fade-enter-to {
+  opacity: 1;
+}
+
+.fade-enter-active {
+  transition: all 0.3s ease;
+}
+.fade-leave-active {
+  transition: all 0.8s ;
+}
+
 </style>

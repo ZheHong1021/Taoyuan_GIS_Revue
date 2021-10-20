@@ -1,16 +1,21 @@
 import Vuex from 'vuex';
-import L from 'leaflet';
+
 const store = new Vuex.Store({//使用Vuex.Store 取得之
   state: {
      map: null,
      controlLayer: null,
+     here_API: {
+        key: "qcwHTsJura1qAf9AT75Nvl5DoolyvxQdAJmu-1wGTWQ", // 您的 HERE APIKEY
+        dataHubReadToken: "APa7WWjkRhGKor_kt7QPQQA", // 您的 Data Hub Token
+        distrcitSpaceId: "5b0dSwmn", // 鄉鎮區界 Space ID
+     },
   },
   actions: {
       setInitMap({commit}, payload){
         commit("setInitMap", payload);
       },
-      addMarker({commit}, payload){
-        commit("addMarker", payload);
+      addLayer({commit}, payload){
+        commit("addLayer", payload);
       },
       setControlLayer({commit}, payload){
         commit("setControlLayer", payload);
@@ -23,22 +28,24 @@ const store = new Vuex.Store({//使用Vuex.Store 取得之
     setInitMap(state, payload){
       state.map = payload;
     },
-    addMarker(state, payload){
+    addLayer(state, payload){
       state.map.addLayer(payload);
     },
     setControlLayer(state, payload){
-      // 將 baseMaps跟 overlayMaps載入到地圖中
-      state.controlLayer = L.control.layers(
+      state.controlLayer = L.control.panelLayers(
         payload.baseMaps, 
-        payload.overlayMaps,{ 
-          collapsed: false,
-        }
-      ).addTo(state.map);
-    },
+        payload.overMaps).addTo(state.map);
+     },
+
     addOverlayMaps(state, payload){
-      state.controlLayer.addOverlay(payload.layer, payload.title)
+      state.controlLayer.addOverlay({
+        icon: `<i class="${payload.icon} text-lg"></i>`,
+        layer: payload.layer,
+      }, payload.title, payload.group);
     }
   },
+
+
 });
 
 export default store;

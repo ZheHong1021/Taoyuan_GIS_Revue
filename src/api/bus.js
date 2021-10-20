@@ -31,5 +31,5 @@ const select_Bus_RealTimeNearStop = 'Direction, StopName, PlateNumb, DutyStatus,
 export const get_Bus_RealTimeNearStop = (data) => PTX_Bus_V2.get(`/RealTimeNearStop/City/${data.city}?$format=JSON&$select=${select_Bus_RealTimeNearStop}&$filter=RouteUID eq '${data.routeUID}' AND DutyStatus eq 1`);
 
 
-const select_Taoyuan_BusStation = 'StopName, StopPosition';
+const select_Taoyuan_BusStation = 'StopUID, StopName, StopPosition';
 export const get_Taoyuan_BusStation = () => PTX_Bus_V2.get(`/Stop/City/Taoyuan/?$format=JSON&$select=${select_Taoyuan_BusStation}`);
