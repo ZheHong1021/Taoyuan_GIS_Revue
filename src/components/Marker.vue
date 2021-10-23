@@ -16,6 +16,8 @@ import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
 import 'leaflet-fontawesome-markers';
 import "leaflet-fontawesome-markers/L.Icon.FontAwesome.css";
+import { onMounted } from '@vue/runtime-core';
+
 
 export default {
     name: 'Marker',
@@ -81,45 +83,50 @@ export default {
 
 
         const store = useStore();
-
         let markerGroup = L.markerClusterGroup();
-        props.data.forEach(item => {
-            let coordinate = props.prefix == "" ? [item[props.lng], item[props.lat]] : [item[props.prefix][props.lng], item[props.prefix][props.lat]];
-            let properties = {};
-            for(let i = 0 ; i < Object.keys(item).length ; i++){
-              properties[Object.keys(item)[i]] = Object.values(item)[i]
-            }
-          let geojsonFeature = {
-              "type": "Feature",
-              "properties": {
-                "category": props.overlay_title,
-                "data": properties,
-              },
-              "geometry": {
-                  "type": "Point",
-                  "coordinates": coordinate // 實際座標位置
+
+        onMounted(()=>{
+          props.data.forEach(item => {
+              let coordinate = props.prefix == "" ? [item[props.lng], item[props.lat]] : [item[props.prefix][props.lng], item[props.prefix][props.lat]];
+              let properties = {};
+              for(let i = 0 ; i < Object.keys(item).length ; i++){
+                properties[Object.keys(item)[i]] = Object.values(item)[i]
               }
-          };
-          L.geoJSON(geojsonFeature,{
-            onEachFeature: onEachFeature,
-             pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {
-                  icon: L.icon.fontAwesome({ 
-                      iconClasses: props.iconClass, // you _could_ add other icon classes, not tested.
-                      markerColor: props.markerColor,
-                      iconColor: props.iconColor,
-                      iconXOffset: props.offsetX,
-                      iconYOffset: props.offsetY,
-                  })
-                });
-              },
-          }).addTo(markerGroup);
-        });
+            let geojsonFeature = {
+                "type": "Feature",
+                "properties": {
+                  "category": props.overlay_title,
+                  "data": properties,
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": coordinate // 實際座標位置
+                }
+            };
+  
+            L.geoJSON(geojsonFeature,{
+              onEachFeature: onEachFeature,
+               pointToLayer: function (feature, latlng) {
+                  return L.marker(latlng, {
+                    icon: L.icon.fontAwesome({ 
+                        iconClasses: props.iconClass, // you _could_ add other icon classes, not tested.
+                        markerColor: props.markerColor,
+                        iconColor: props.iconColor,
+                        iconXOffset: props.offsetX,
+                        iconYOffset: props.offsetY,
+                    })
+                  });
+                },
+            }).addTo(markerGroup);
+          });
+
+        })
 
         // 看預設要不要開啟
         if(props.open){
           store.dispatch("addLayer", markerGroup); 
         }
+
         store.dispatch("addOverlayMaps", {
           layer: markerGroup, 
           title: props.overlay_title, 
@@ -133,12 +140,18 @@ export default {
             if (feature.properties) {
               let info = feature.properties;
               switch (info.category){
-                case "公車站":
+                case "公車站":{
+                    let html = "";
+                    let list = store.state.module_Bus.stationID_List[info.data.StationID];
+                    list.forEach((item, index)=>{
+                      html = html +  `<p class = 'text-base font-bold m-0'>行經路線${index+1} : ${item.RouteName.Zh_tw}</p>`
+                    })
                     layer.bindPopup(`
                         <h1>${info.data.StopName.Zh_tw}</h1>
-                        <p>${info.data.StopUID}</p>
+                        ${html}
                     `);
                     break;
+                }
                 case "景點":
                     layer.bindPopup(`
                         <h1 class = 'text-xl font-bold w-full bg-info'>${info.data.Name}</h1>

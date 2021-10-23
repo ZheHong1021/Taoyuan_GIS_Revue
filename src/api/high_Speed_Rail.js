@@ -2,10 +2,19 @@
 import axios from 'axios'
 import {useAuthHeader} from '../utilities/useAuthHeader'
 
-const PTX_THSR_Station_V2 = axios.create({
+let PTX_THSR_Station_V2 = axios.create({
     baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Rail/THSR',
-    headers: useAuthHeader()
+    headers: useAuthHeader(),
 });
+
+setInterval(() => {
+PTX_THSR_Station_V2 = axios.create({
+    baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Rail/THSR',
+    headers: useAuthHeader(),
+});
+}, 4 * 60 * 1000 );
+
+
 
 // const select_THSR_Station = "StationUID,StationName,StationPosition"
 export const get_THSR_Station = () => PTX_THSR_Station_V2.get(`/Station`)

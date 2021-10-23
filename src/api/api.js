@@ -6,6 +6,7 @@ import {get_Bus_Route,
     get_Bus_EstimatedTimeOfArrival, 
     get_Bus_RealTimeByFrequency, 
     get_Bus_RealTimeNearStop, 
+    get_Taoyuan_BusStop,
     get_Taoyuan_BusStation} from './bus';
 
 
@@ -53,6 +54,9 @@ export const API_Bus_RealTimeByFrequency = get_Bus_RealTimeByFrequency
 
 // 得到目前公車在哪個站點(使用到的位置: /views/Bus)
 export const API_Bus_RealTimeNearStop = get_Bus_RealTimeNearStop
+
+// 得到公車的站點資訊(使用到的位置: /components/Map)
+export const API_Taoyuan_BusStop = get_Taoyuan_BusStop
 
 // 得到公車的站點資訊(使用到的位置: /components/Map)
 export const API_Taoyuan_BusStation = get_Taoyuan_BusStation

@@ -2,10 +2,20 @@
 import axios from 'axios'
 import {useAuthHeader} from '../utilities/useAuthHeader'
 
-const PTX_Bus_V2 = axios.create({
+
+let PTX_Bus_V2 = axios.create({
     baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus',
     headers: useAuthHeader()
 });
+
+setInterval(() => {
+    PTX_Bus_V2 = axios.create({
+        baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Bus',
+        headers: useAuthHeader()
+    });
+}, 4 * 60 * 1000 );
+
+
 
 const select_Bus_Route = 'RouteUID, RouteName, SubRoutes, BusRouteType, DepartureStopNameZh, DestinationStopNameZh';
 export const get_Bus_Route = (data) => PTX_Bus_V2.get(`/Route/City/${data}?$format=JSON&$select=${select_Bus_Route}`);
@@ -28,8 +38,11 @@ export const get_Bus_RealTimeByFrequency = (data) => PTX_Bus_V2.get(`/RealTimeBy
 
 
 const select_Bus_RealTimeNearStop = 'Direction, StopName, PlateNumb, DutyStatus, StopUID';
-export const get_Bus_RealTimeNearStop = (data) => PTX_Bus_V2.get(`/RealTimeNearStop/City/${data.city}?$format=JSON&$select=${select_Bus_RealTimeNearStop}&$filter=RouteUID eq '${data.routeUID}' AND DutyStatus eq 0`);
+export const get_Bus_RealTimeNearStop = (data) => PTX_Bus_V2.get(`/RealTimeNearStop/City/${data.city}?$format=JSON&$select=${select_Bus_RealTimeNearStop}&$filter=RouteUID eq '${data.routeUID}'  AND Direction eq ${data.direction} AND DutyStatus eq 0`);
 
 
-const select_Taoyuan_BusStation = 'StopUID, StopName, StopPosition';
-export const get_Taoyuan_BusStation = () => PTX_Bus_V2.get(`/Stop/City/Taoyuan/?$format=JSON&$select=${select_Taoyuan_BusStation}`);
+const select_Taoyuan_BusStop = 'StopUID, StationID, StopName, StopPosition';
+export const get_Taoyuan_BusStop = () => PTX_Bus_V2.get(`/Stop/City/Taoyuan/?$format=JSON&$select=${select_Taoyuan_BusStop}`);
+
+const select_Taoyuan_BusStation = 'Stops, StationID';
+export const get_Taoyuan_BusStation = () => PTX_Bus_V2.get(`/Station/City/Taoyuan/?$format=JSON&$select=${select_Taoyuan_BusStation}`);

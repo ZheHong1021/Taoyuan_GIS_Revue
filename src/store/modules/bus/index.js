@@ -1,3 +1,5 @@
+
+
 export default {
     namespaced: true,
     state:{
@@ -20,7 +22,8 @@ export default {
             bus: new L.layerGroup(),
             polyline: new L.layerGroup(),
             stops: new L.layerGroup(),
-        }
+        },
+        stationID_List: {},
     },
     actions:{
         setApiRoute({commit}, payload){
@@ -38,6 +41,9 @@ export default {
         setCurrentPage({commit}, payload){
             commit("setCurrentPage", payload);
         },
+        set_StationID({commit}, payload){
+            commit('set_StationID', payload);
+        }
     },
     mutations:{
         setApiRoute(state, payload){
@@ -65,6 +71,9 @@ export default {
         change_BusRouteUID(state, payload){
             state.bus_Choose.routeUID = payload;
         },
+        set_StationID(state, payload){
+            state.stationID_List = payload;
+        }
 
     },
     getters:{

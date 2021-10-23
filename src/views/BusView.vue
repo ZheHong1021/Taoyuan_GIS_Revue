@@ -253,7 +253,8 @@ export default {
               // 刷新站點資訊
               updateInterval = setInterval(()=>{
                 get_DisplayStopOfRoute();
-                get_Current_BusPosition
+                get_Current_BusPosition();
+                current_StopUID_Arr.value = [];
               }, update_Time * 1000);
           }, 1000)
       }
@@ -315,6 +316,7 @@ export default {
         .then( (response) => {
             current_BusInPos.value = response[0].data
             current_BusInStop.value = response[1].data
+            console.log(current_BusInStop.value);
     
 
             current_BusInStop.value.forEach((data)=>{

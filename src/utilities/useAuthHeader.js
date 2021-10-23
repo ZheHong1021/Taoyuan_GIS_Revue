@@ -11,7 +11,6 @@ export const useAuthHeader = ()=>{
   ShaObj.update('x-date: ' + GMTString);
   var HMAC = ShaObj.getHMAC('B64');
   var Authorization = `hmac username="${AppID}", algorithm="hmac-sha1", headers="x-date", signature="${HMAC}"`;
-
   return {
     'Authorization': Authorization,
     'X-Date': GMTString, /*,'Accept-Encoding': 'gzip'*/

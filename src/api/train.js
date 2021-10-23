@@ -2,16 +2,29 @@
 import axios from 'axios'
 import {useAuthHeader} from '../utilities/useAuthHeader'
 
-const PTX_Train_Station_V2 = axios.create({
+let PTX_Train_Station_V2 = axios.create({
     baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Rail/TRA',
     headers: useAuthHeader()
 });
 
 // 票價抓Version3的
-const PTX_Train_Station_V3 = axios.create({
+let PTX_Train_Station_V3 = axios.create({
     baseURL: 'https://ptx.transportdata.tw/MOTC/v3/Rail/TRA',
     headers: useAuthHeader()
 });
+
+
+setInterval(() => {
+    PTX_Train_Station_V2 = axios.create({
+        baseURL: 'https://ptx.transportdata.tw/MOTC/v2/Rail/TRA',
+        headers: useAuthHeader()
+    });
+    PTX_Train_Station_V3 = axios.create({
+        baseURL: 'https://ptx.transportdata.tw/MOTC/v3/Rail/TRA',
+        headers: useAuthHeader()
+    });
+}, 4 * 60 * 1000 );
+
 
 // const select_Train_Station = "StationUID,StationName,StationPosition,LocationCity,StationPhone"
 export const get_Train_Station = () => PTX_Train_Station_V2.get(`/Station`);
