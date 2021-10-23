@@ -1,12 +1,12 @@
 <template>
   <div class='district_style'>
-    <h1 v-if="district.properties" class="font-bold">
-        <p><i class="fas fa-city"></i> {{district.properties.TOWNNAME}}</p>
-        <p>人口數量: {{getSinglePopulation }}</p>
-        <p>佔桃園市人口比例: {{  getPercentage(getSinglePopulation, getTotalPopulation) }}%</p>
-        <p>最高人口比例: {{  getPercentage(max_Population, getTotalPopulation) }}%</p>
-        <p>最低人口比例: {{  getPercentage(min_Population, getTotalPopulation)  }}%</p>
-        <p>桃園市人口數: {{ getTotalPopulation }}</p>
+    <h1 v-if="district.properties" class="font-bold text-xl">
+    <p class="text-lg"><i class="fas fa-city"></i> {{district.properties.TOWNNAME}}</p>
+    <p class="text-lg">人口數量: {{getSinglePopulation }}</p>
+    <p class="text-lg">佔桃園市人口比例: {{  getPercentage(getSinglePopulation, getTotalPopulation) }}%</p>
+    <p class="text-lg">最高人口比例: {{  getPercentage(max_Population, getTotalPopulation) }}%</p>
+    <p class="text-lg">最低人口比例: {{  getPercentage(min_Population, getTotalPopulation)  }}%</p>
+    <p class="text-lg">桃園市人口數: {{ getTotalPopulation }}</p>
     </h1>
   </div>
 </template>

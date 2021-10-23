@@ -105,6 +105,7 @@ export default {
 .leaflet-panel-layers-item:hover,
 .leaflet-panel-layers-item:hover i{
     background: #fa0;
+    font-weight: bold;
 }
 
 .leaflet-panel-layers-group{

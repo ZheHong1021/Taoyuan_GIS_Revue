@@ -139,9 +139,52 @@ export default {
                         <p>${info.data.StopUID}</p>
                     `);
                     break;
-                default:
+                case "景點":
                     layer.bindPopup(`
-                        ${info.data.StationName.Zh_tw}
+                        <h1 class = 'text-xl font-bold w-full bg-info'>${info.data.Name}</h1>
+                        <a class = 'text-base' href="${info.data.TYWebsite}" target="_blank">網站連結</a>
+                        <p class = 'text-base font-bold'>地址: ${info.data.Add}</p>
+                        <p class = 'text-base font-bold'>開放時間: ${info.data.Opentime}</p>
+                        <p class = 'text-base font-bold'>停車資訊: ${info.data.Parkinginfo}</p>
+                        <p class = 'text-base font-bold'>票價資訊: ${info.data.Ticketinfo}</p>
+                        <p class = 'text-base font-bold'>連絡電話: ${info.data.Tel}</p>
+                        <p class = 'text-base font-bold'>備註: ${info.data.Remarks}</p>
+                    `);
+                    break;
+                
+                case "住宿":
+                    layer.bindPopup(`
+                         <h1 class = 'text-xl font-bold w-full bg-info'>${info.data.Name}</h1>
+                          <a class = 'text-base' href="${info.data.TYWebsite}" target="_blank">網站連結</a>
+                          <p class = 'text-base font-bold'>地址: ${info.data.Add}</p>
+                          <p class = 'text-base font-bold'>開放時間: ${info.data.Opentime}</p>
+                          <p class = 'text-base font-bold'>停車資訊: ${info.data.Parkinginfo ? info.data.Parkinginfo : '未提供'}</p>
+                          <p class = 'text-base font-bold'>連絡電話: ${info.data.Tel}</p>
+                          <p class = 'text-base font-bold'>價位: ${info.data.Charge ? info.data.Charge : '未提供'}</p>
+                          <p class = 'text-base font-bold'>備註: ${info.data.Remarks ? info.data.Remarks : '無'}</p>
+                    `);
+                    break;
+                case "消費":
+                    layer.bindPopup(`
+                         <h1 class = 'text-xl font-bold w-full bg-info'>${info.data.Name}</h1>
+                          <a class = 'text-base' href="${info.data.TYWebsite}" target="_blank">網站連結</a>
+                          <p class = 'text-base font-bold'>地址: ${info.data.Add}</p>
+                          <p class = 'text-base font-bold'>開放時間: ${info.data.Opentime}</p>
+                          <p class = 'text-base font-bold'>停車資訊: ${info.data.Parkinginfo ? info.data.Parkinginfo : '未提供'}</p>
+                          <p class = 'text-base font-bold'>票價資訊: ${info.data.Ticketinfo ? info.data.Ticketinfo : '未提供'}</p>
+                          <p class = 'text-base font-bold'>連絡電話: ${info.data.Tel}</p>
+                          <p class = 'text-base font-bold'>備註: ${info.data.Remarks ? info.data.Remarks : '無'}</p>
+                    `);
+                    break;
+                case "火車站":
+                    layer.bindPopup(`
+                        <h1>${info.data.StationName.Zh_tw}火車站</h1>
+                        <p class = 'text-base font-bold'>連絡電話: ${info.data.StationPhone}</p>
+                    `);
+                    break;
+                case "高鐵站":
+                    layer.bindPopup(`
+                        <h1>${info.data.StationName.Zh_tw}高鐵站</h1>
                     `);
                     break;
                 }

@@ -24,11 +24,11 @@ export const get_Bus_EstimatedTimeOfArrival = (data) => PTX_Bus_V2.get(`/Estimat
 
 
 const select_Bus_RealTimeByFrequency = 'PlateNumb, Direction, BusPosition, DutyStatus';
-export const get_Bus_RealTimeByFrequency = (data) => PTX_Bus_V2.get(`/RealTimeByFrequency/City/${data.city}?$format=JSON&$select=${select_Bus_RealTimeByFrequency}&$filter=RouteUID eq '${data.routeUID}' AND DutyStatus eq 1`);
+export const get_Bus_RealTimeByFrequency = (data) => PTX_Bus_V2.get(`/RealTimeByFrequency/City/${data.city}?$format=JSON&$select=${select_Bus_RealTimeByFrequency}&$filter=RouteUID eq '${data.routeUID}' AND DutyStatus eq 0`);
 
 
 const select_Bus_RealTimeNearStop = 'Direction, StopName, PlateNumb, DutyStatus, StopUID';
-export const get_Bus_RealTimeNearStop = (data) => PTX_Bus_V2.get(`/RealTimeNearStop/City/${data.city}?$format=JSON&$select=${select_Bus_RealTimeNearStop}&$filter=RouteUID eq '${data.routeUID}' AND DutyStatus eq 1`);
+export const get_Bus_RealTimeNearStop = (data) => PTX_Bus_V2.get(`/RealTimeNearStop/City/${data.city}?$format=JSON&$select=${select_Bus_RealTimeNearStop}&$filter=RouteUID eq '${data.routeUID}' AND DutyStatus eq 0`);
 
 
 const select_Taoyuan_BusStation = 'StopUID, StopName, StopPosition';

@@ -3,7 +3,7 @@
       v-if="data.length > 0"
       :data="data" 
       overlay_title="公車站" 
-      group='<i class="fas fa-map-marker-alt text-blue-500"></i> 交通資訊'
+      group='<i class="fas fa-map-marker-alt text-red-500"></i> 交通資訊'
       prefix="StopPosition"
       lat="PositionLat" 
       lng="PositionLon"
