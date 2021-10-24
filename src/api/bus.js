@@ -46,3 +46,5 @@ export const get_Taoyuan_BusStop = () => PTX_Bus_V2.get(`/Stop/City/Taoyuan/?$fo
 
 const select_Taoyuan_BusStation = 'Stops, StationID';
 export const get_Taoyuan_BusStation = () => PTX_Bus_V2.get(`/Station/City/Taoyuan/?$format=JSON&$select=${select_Taoyuan_BusStation}`);
+
+export const get_Taoyuan_NearByBusStop = (data) => PTX_Bus_V2.get(`/Stop/City/Taoyuan/?$spatialFilter=nearby(${data.lat}, ${data.lng}, ${data.distance})&$format=JSON`);

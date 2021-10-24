@@ -31,3 +31,5 @@ export const get_Train_Station = () => PTX_Train_Station_V2.get(`/Station`);
 // export const get_Train_Station = () => PTX_Train_Station_V2.get(`/Station?$select=${select_Train_Station}`);
 export const get_Train_Odfare = (data) => PTX_Train_Station_V3.get(`/ODFare/${data.OriginStationID}/to/${data.DestinationStationID }?$format=JSON`)
 export const get_Train_TimeTable = (data) => PTX_Train_Station_V2.get(`/DailyTimetable/OD/${data.OriginStationID}/to/${data.DestinationStationID}/${data.choose_Date}?$format=JSON`)
+
+export const get_NearByTrain_Station = (data) => PTX_Train_Station_V2.get(`/Station?$spatialFilter=nearby(${data.lat}, ${data.lng}, ${data.distance})&$format=JSON`);

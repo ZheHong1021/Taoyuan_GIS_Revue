@@ -1,5 +1,5 @@
-import {get_Train_Station, get_Train_Odfare, get_Train_TimeTable} from './train';
-import {get_THSR_Station, get_THSR_Odfare, get_THSR_TimeTable} from './high_Speed_Rail';
+import {get_Train_Station, get_Train_Odfare, get_Train_TimeTable, get_NearByTrain_Station} from './train';
+import {get_THSR_Station, get_THSR_Odfare, get_THSR_TimeTable, get_NearByTHSR_Station} from './high_Speed_Rail';
 import {get_Bus_Route, 
     get_Bus_StopOfRoute, 
     get_Bus_DisplayStopOfRoute, 
@@ -7,7 +7,8 @@ import {get_Bus_Route,
     get_Bus_RealTimeByFrequency, 
     get_Bus_RealTimeNearStop, 
     get_Taoyuan_BusStop,
-    get_Taoyuan_BusStation} from './bus';
+    get_Taoyuan_BusStation,
+    get_Taoyuan_NearByBusStop} from './bus';
 
 
 /*====== 台鐵 ====== */
@@ -21,6 +22,8 @@ export const API_Train_Odfare = get_Train_Odfare
 // 得到台鐵的時刻表(使用到的位置: /views/TRA)
 export const API_Train_TimeTable = get_Train_TimeTable
 
+// 得到附近的有火車站(使用到的位置: /views/TRA)
+export const API_Train_NearByStation = get_NearByTrain_Station;
 
 /*====== 高鐵 ====== */
 
@@ -33,6 +36,8 @@ export const API_THSR_Odfare = get_THSR_Odfare
 // 得到高鐵的時刻表(使用到的位置: /views/THSR)
 export const API_THSR_TimeTable = get_THSR_TimeTable
 
+// 得到附近的有高鐵站(使用到的位置: /views/TRA)
+export const API_THSR_NearByStation = get_NearByTHSR_Station;
 
 
 /*====== 公車 ====== */
@@ -60,3 +65,5 @@ export const API_Taoyuan_BusStop = get_Taoyuan_BusStop
 
 // 得到公車的站點資訊(使用到的位置: /components/Map)
 export const API_Taoyuan_BusStation = get_Taoyuan_BusStation
+
+export const API_Taoyuan_NearByBusStop = get_Taoyuan_NearByBusStop

@@ -21,3 +21,5 @@ export const get_THSR_Station = () => PTX_THSR_Station_V2.get(`/Station`)
 // export const get_THSR_Station = () => PTX_THSR_Station_V2.get(`/Station?$select=${select_THSR_Station}`)
 export const get_THSR_Odfare = (data) => PTX_THSR_Station_V2.get(`/ODFare/${data.OriginStationID}/to/${data.DestinationStationID }?$format=JSON`)
 export const get_THSR_TimeTable = (data) => PTX_THSR_Station_V2.get(`/DailyTimetable/OD/${data.OriginStationID}/to/${data.DestinationStationID}/${data.choose_Date}?$format=JSON`)
+
+export const get_NearByTHSR_Station = (data) => PTX_THSR_Station_V2.get(`/Station?$spatialFilter=nearby(${data.lat}, ${data.lng}, ${data.distance})&$format=JSON`);

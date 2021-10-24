@@ -8,6 +8,7 @@ const store = new Vuex.Store({//使用Vuex.Store 取得之
   state: {
      map: null,
      controlLayer: null,
+     user_Pos: null,
      here_API: {
         key: "qcwHTsJura1qAf9AT75Nvl5DoolyvxQdAJmu-1wGTWQ", // 您的 HERE APIKEY
         dataHubReadToken: "APa7WWjkRhGKor_kt7QPQQA", // 您的 Data Hub Token
@@ -16,7 +17,7 @@ const store = new Vuex.Store({//使用Vuex.Store 取得之
      tourism_Data: {
        type: 'bar',
        data: '門票收入',
-       month: '八月'
+       month: '九月'
      },
      train: [],
      new_train: [],
@@ -37,6 +38,9 @@ const store = new Vuex.Store({//使用Vuex.Store 取得之
       setInitMap({commit}, payload){
         commit("setInitMap", payload);
       },
+      setUserPos({commit}, payload){
+        commit("setUserPos", payload);
+      },
       addLayer({commit}, payload){
         commit("addLayer", payload);
       },
@@ -56,6 +60,9 @@ const store = new Vuex.Store({//使用Vuex.Store 取得之
   mutations: {
     setInitMap(state, payload){
       state.map = payload;
+    },
+    setUserPos(state, payload){
+      state.user_Pos = payload;
     },
     addLayer(state, payload){
       state.map.addLayer(payload);
@@ -128,6 +135,9 @@ const store = new Vuex.Store({//使用Vuex.Store 取得之
     },
     get_NewThsrArr_Length(state){
       return state.new_high_Speed_Rail.length === 0;
+    },
+    get_UserPos(state){
+      return state.user_Pos;
     },
   },
 

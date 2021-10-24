@@ -3,8 +3,8 @@
       <Loading style="z-index: 1001;" v-if="showLoading"></Loading>
     </transition>
   <div id="map" v-show="!showLoading"></div>
-  <District />
-  <Map :init="init_Map"/>
+  <Map />
+  <!-- <District /> -->
   
   <Legend />
   <Thsr />
@@ -20,7 +20,7 @@
 import { reactive, ref } from '@vue/reactivity'
 import { onMounted } from '@vue/runtime-core';
 import Map from '@/components/Map'
-import District from '@/components/District'
+// import District from '@/components/District'
 import Legend from '@/components/Legend'
 import Loading from '@/components/Loading';
 import Thsr from '@/components/Transportation/Thsr';
@@ -33,7 +33,7 @@ export default {
   name: "App",
   components: {
     Map: Map,
-    District: District,
+    // District: District,
     Legend: Legend,
     Loading: Loading,
     Thsr: Thsr,

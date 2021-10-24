@@ -5,21 +5,33 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    meta: {
+      title: '桃花園',
+    },
     component: Home
   },
   {
     path: '/bus',
     name: 'BusView',
+    meta: {
+      title: '桃花園',
+    },
     component: () => import(/* webpackChunkName: "about" */ '../views/BusView.vue')
   },
   {
     path: '/thsr',
     name: 'ThsrView',
+    meta: {
+      title: '桃花園',
+    },
     component: () => import(/* webpackChunkName: "about" */ '../views/ThsrView.vue')
   },
   {
     path: '/train',
     name: 'TrainView',
+    meta: {
+      title: '桃花園',
+    },
     component: () => import(/* webpackChunkName: "about" */ '../views/TrainView.vue')
   },
 ]

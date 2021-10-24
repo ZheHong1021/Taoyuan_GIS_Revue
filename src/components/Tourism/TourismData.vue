@@ -36,6 +36,7 @@ export default {
             tourism_data.value[month] = {'觀光遊憩區別': name, '門票收入': income, '遊客人次': number};
         }
 
+        get_Tourism_Data(require('@/assets/data/Tourist_Info/September_number.json'), '九月');
         get_Tourism_Data(require('@/assets/data/Tourist_Info/August_number.json'), '八月');
         get_Tourism_Data(require('@/assets/data/Tourist_Info/July_number.json'), '七月');
         get_Tourism_Data(require('@/assets/data/Tourist_Info/June_number.json'), '六月');

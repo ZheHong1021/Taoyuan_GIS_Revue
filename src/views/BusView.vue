@@ -326,15 +326,15 @@ export default {
             })
             current_BusInPos.value.forEach((data)=>{
               if(data.Direction === store.state.module_Bus.bus_Choose.direction){
-                  L.marker( [data.BusPosition.PositionLat, data.BusPosition.PositionLon], {
-                    icon: new L.Icon({
-                      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-                      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                      iconSize: [25, 41],
-                      iconAnchor: [12, 41],
-                      popupAnchor: [1, -34],
-                      shadowSize: [41, 41]
-                    })
+                  L.marker( [data.BusPosition.PositionLat, data.BusPosition.PositionLon],{
+                      icon: L.icon.fontAwesome({
+                          iconClasses: "fas fa-bus",
+                          markerColor: "#eb3b5a",
+                          iconColor: "#FFF",
+                          // use XY offsets to nudge positioning of icons, negative accepted
+                          iconXOffset: -2,
+                          iconYOffset: 0
+                      })
                   }).addTo(Current_Marker_Bus)
                   .bindPopup(`<h1 class='text-xl font-bold text-red-500'>目前公車位置 - ${data.PlateNumb}</h1>`);
                   Current_Marker_Bus.addTo(map);
@@ -352,7 +352,16 @@ export default {
           marker_PolyLine_arr = []  // 紀錄 PolyLine的 [[緯度1, 經度1], [緯度2, 經度2], ......]
           Object.entries(store.state.module_Bus.api_StopOfRoute).forEach(([, value]) => {
             marker_PolyLine_arr.push([value.StopPosition.PositionLat, value.StopPosition.PositionLon]);
-            L.marker([value.StopPosition.PositionLat, value.StopPosition.PositionLon]).bindPopup(`
+            L.marker([value.StopPosition.PositionLat, value.StopPosition.PositionLon],{
+                icon: L.icon.fontAwesome({
+                    iconClasses: "fas fa-bus",
+                    markerColor: "#4b7bec",
+                    iconColor: "#FFF",
+                    // use XY offsets to nudge positioning of icons, negative accepted
+                    iconXOffset: -2,
+                    iconYOffset: 0
+                })
+            }).bindPopup(`
               <h2 class='text-xl px-4 py-2'>No.${value.StopSequence}_${value.StopName.Zh_tw}</h2>
             `).addTo(bus_Route_Marker);
           }); 

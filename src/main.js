@@ -10,3 +10,10 @@ import 'primevue/resources/primevue.min.css'                 //core css
 import 'primeicons/primeicons.css'   
 
 createApp(App).use(store).use(router).use(PrimeVue).mount('#app')
+
+router.beforeEach((to,from,next) =>{
+    if(to.meta.title){
+      document.title = to.meta.title
+    }
+    next();
+  })

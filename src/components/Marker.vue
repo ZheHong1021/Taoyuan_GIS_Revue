@@ -1,5 +1,8 @@
 <template>
-<slot></slot>
+  <!-- Dialog -->
+  <Dialog :header="dialog_Info.header" v-model:visible="is_View_Dialog"  :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}" >
+      <p v-html="dialog_Info.body"></p>
+  </Dialog>
 </template>
 
 <script>
@@ -16,11 +19,14 @@ import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
 import 'leaflet-fontawesome-markers';
 import "leaflet-fontawesome-markers/L.Icon.FontAwesome.css";
-import { onMounted } from '@vue/runtime-core';
-
+import { onMounted, reactive, ref } from '@vue/runtime-core';
+import Dialog from 'primevue/dialog';
 
 export default {
     name: 'Marker',
+    components:{
+      Dialog: Dialog,
+    },
     props: {
       data: { // 資料
         type: Array,
@@ -200,12 +206,33 @@ export default {
                         <h1>${info.data.StationName.Zh_tw}高鐵站</h1>
                     `);
                     break;
+                
+                case "商圈":
+                    layer.bindPopup(`
+                       <h1 class = 'text-xl font-bold w-full bg-info'>${info.data.name}</h1>
+                       <div class = 'py-4 text-white text-lg'>
+                           <button onclick="openDialog('${info.data.name} (介紹)','${info.data.description.replaceAll("\n","<br />")}')" class='bg-blue-500 rounded px-2 py-1 font-bold mx-1'>商圈介紹</button>
+                           <button onclick="openDialog('${info.data.name} (交通方式)','${info.data.transportation.replaceAll("\n","<br />")}')" class='bg-green-500 rounded px-2 py-1 font-bold mx-1'>交通方式</button>
+                           <button onclick="openDialog('${info.data.name} (組織)','${info.data.organization}')" class='bg-red-500 rounded px-2 py-1 font-bold mx-1'>商圈組織</button>
+                       </div>
+                   `);
+                    break;
                 }
             }
         }
-        
+    const is_View_Dialog = ref(false);
+    const dialog_Info = reactive({
+        header: '',
+        body: '',
+    })
+    window.openDialog = (header, content)=>{
+        is_View_Dialog.value = true;
+        dialog_Info.header = header;
+        dialog_Info.body = content;
+    };// 解決字串模板@click無效的問題
 
-        return {markerGroup};
+
+        return {markerGroup, is_View_Dialog, dialog_Info};
     }
 }
 </script>
@@ -236,6 +263,10 @@ export default {
 	font-size: 14px;
 	padding: 0 10px;
 	font-weight: bolder;
+}
+
+.leaflet-popup-content p {
+  margin: 0.5rem 0;
 }
 
 </style>
